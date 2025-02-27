@@ -172,13 +172,21 @@ Component({
      */
     getImage() {
       const _this = this
-      wx.chooseImage({
+      wx.chooseMedia({
+        count: 1, // 允许选择的文件数量
+        mediaType: ['image'], // 只允许选择图片
+        sourceType: ['album'], // 允许从相册或相机选择
         success: function (res) {
-          _this.setData({
-            isShowImg: false,
-            filePath: res.tempFilePaths[0],
-          })
-          _this.loadImage(_this.data.filePath)
+          if (res.tempFiles && res.tempFiles.length > 0) {
+            _this.setData({
+              isShowImg: false,
+              filePath: res.tempFiles[0].tempFilePath, // 选择的图片路径
+            })
+            _this.loadImage(_this.data.filePath)
+          }
+        },
+        fail: function (err) {
+          console.error('图片选择失败', err)
         },
       })
     },
@@ -284,56 +292,97 @@ Component({
       wx.showLoading({
         title: '图片生成中...',
       })
+
       this.drag.IS_NO_DRAG = true
-      // 将图片写入画布
-      const ctx = wx.createCanvasContext('wxCropperCanvas', _this)
-      const w = this.data.qualityWidth
-      const h = Math.ceil(this.data.qualityWidth / this.data.innerAspectRadio)
-      ctx.drawImage(_this.data.filePath, 0, 0, w, h)
-      ctx.draw(true, () => {
-        // 获取画布要裁剪的位置和宽度   均为百分比 * 画布中图片的宽度    保证了在微信小程序中裁剪的图片模糊  位置不对的问题
-        const canvasW = Math.ceil(
-          ((_this.data.cropperW - _this.data.cutL - _this.data.cutR) /
-            _this.data.cropperW) *
-            w
-        )
-        const canvasH = Math.ceil(
-          ((_this.data.cropperH - _this.data.cutT - _this.data.cutB) /
-            _this.data.cropperH) *
-            h
-        )
-        const canvasL = Math.ceil((_this.data.cutL / _this.data.cropperW) * w)
-        const canvasT = Math.ceil((_this.data.cutT / _this.data.cropperH) * h)
-        // console.log(canvasW, canvasH, canvasL, canvasT)
-        // 生成图片
-        wx.canvasToTempFilePath(
-          {
-            x: canvasL,
-            y: canvasT,
-            width: canvasW,
-            height: canvasH,
-            destWidth: canvasW,
-            destHeight: canvasH,
-            quality: 0.9,
-            canvasId: 'wxCropperCanvas',
-            success: function (res) {
-              const img = {
-                path: res.tempFilePath,
-                width: canvasW,
-                height: canvasH,
-              }
-              _this.triggerEvent('close', img)
-            },
-            complete: function () {
-              // 结束之后可拖拽放大缩小
-              // 关闭loading
-              wx.hideLoading()
-              _this.drag.IS_NO_DRAG = false
-            },
-          },
-          _this
-        )
-      })
+
+      // 获取 Canvas 组件
+      wx.createSelectorQuery()
+        .in(this)
+        .select('#cropperCanvas')
+        .node()
+        .exec((res) => {
+          console.log('canvas', res)
+          if (!res[0] || !res[0].node) {
+            console.error('Canvas 获取失败')
+            wx.hideLoading()
+            return
+          }
+
+          const canvas = res[0].node
+          const ctx = canvas.getContext('2d')
+
+          const w = this.data.qualityWidth
+          const h = Math.ceil(
+            this.data.qualityWidth / this.data.innerAspectRadio
+          )
+
+          // 设置 Canvas 大小
+          canvas.width = w
+          canvas.height = h
+
+          // 加载图片
+          const img = canvas.createImage()
+          img.src = this.data.filePath
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, w, h)
+
+            // 计算裁剪参数
+            const canvasW = Math.ceil(
+              ((this.data.cropperW - this.data.cutL - this.data.cutR) /
+                this.data.cropperW) *
+                w
+            )
+            const canvasH = Math.ceil(
+              ((this.data.cropperH - this.data.cutT - this.data.cutB) /
+                this.data.cropperH) *
+                h
+            )
+            const canvasL = Math.ceil(
+              (this.data.cutL / this.data.cropperW) * w
+            )
+            const canvasT = Math.ceil(
+              (this.data.cutT / this.data.cropperH) * h
+            )
+            console.log(
+              '裁剪',
+              canvasL,
+              canvasT,
+              canvasW,
+              canvasH,
+              canvasW,
+              canvasH
+            )
+            // 截取裁剪区域
+            wx.canvasToTempFilePath({
+              x: canvasL,
+              y: canvasT,
+              width: canvasW,
+              height: canvasH,
+              destWidth: canvasW,
+              destHeight: canvasH,
+              quality: 0.9,
+              canvas,
+              success: function (res) {
+                console.log('res', res)
+                const img = {
+                  path: res.tempFilePath,
+                  width: canvasW,
+                  height: canvasH,
+                }
+                _this.triggerEvent('close', img)
+              },
+              complete: function () {
+                wx.hideLoading()
+                _this.drag.IS_NO_DRAG = false
+              },
+            })
+          }
+
+          img.onerror = (err) => {
+            console.error('图片加载失败', err)
+            wx.hideLoading()
+          }
+        })
     },
 
     /**

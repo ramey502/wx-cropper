@@ -35,7 +35,6 @@ Page {
   margin: 0 auto;
   width: 100%;
   min-height: calc(50%);
-  overflow-y: auto;
 }
 .wx-content-info .cropper-content .wx-corpper {
   position: relative;

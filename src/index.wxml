@@ -45,6 +45,6 @@
         <text class="cropper-dec" style="color: #fff">请确认手写体框选范围</text>
         <view class="cropper-save" bindtap="getImageInfo">确认</view>
     </view>
-    <canvas canvas-id="wxCropperCanvas"
+    <canvas id="cropperCanvas" type="2d"
         style="position:absolute; width:{{qualityWidth}}px;height:{{qualityWidth / innerAspectRadio }}px;top:-9999px;left:-9999px;"></canvas>
 </view>
