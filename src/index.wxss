@@ -1,4 +1,3 @@
-/* pages/cropper/cropper.wxss */
 Page {
   /* 点的颜色 */
   --primary-color: rgb(255, 255, 255);
@@ -13,31 +12,28 @@ Page {
 }
 .wx-content-info {
   display: flex;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   flex-direction: column;
   background: var(--cropper-bg);
+  width: 100vw;
+  height: 100vh;
 }
-.wx-content-info .cropper-content {
+.cropper-content {
   display: flex;
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 104rpx;
-  left: 0;
+  top: 0px;
+  right: 10px;
+  bottom: 52px;
+  left: 10px;
   flex: 1;
   justify-content: center;
   align-items: center;
   z-index: 2;
-  margin: 0 auto;
-  width: 100%;
-  min-height: calc(50%);
 }
-.wx-content-info .cropper-content .wx-corpper {
+.cropper-content .wx-cropper {
+  display: flex;
   position: relative;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   overflow: visible;
@@ -49,32 +45,25 @@ Page {
   -webkit-touch-callout: none;
   box-sizing: border-box;
 }
-.wx-content-info .cropper-content .wx-corpper .wx-corpper-content {
+.cropper-content .wx-cropper .wx-cropper-content {
   position: relative;
   /* 内部的信息 */
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-content-bg {
+
+.wx-cropper-content-bg {
   display: block;
   position: relative;
   margin: 0 auto;
   image-orientation: 0deg !important;
   width: 100%;
-  /* min-width: 0 !important;
-  max-width: none !important; */
+  min-width: 0 !important;
+  max-width: none !important;
   height: 100%;
-  /* min-height: 0 !important; */
-  /* max-height: none !important; */
+  min-height: 0 !important;
+  max-height: none !important;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-content-bg
-  .mask {
+
+.mask {
   position: absolute;
   top: 0;
   right: 0;
@@ -82,11 +71,8 @@ Page {
   left: 0;
   background: rgba(0, 0, 0, 0.7);
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box {
+
+.wx-cropper-crop-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -97,43 +83,21 @@ Page {
   background: var(--box-bg);
 }
 
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box {
+.wx-cropper-view-box {
   display: block;
   position: relative;
   outline: 4rpx solid var(--primary-color-outline);
   width: 100%;
   height: 100%;
   overflow: visible;
-  /* 横向虚线 */
-  /* 纵向虚线 */
-  /* 四个方向的线  为了之后的拖动事件*/
-  /* 右下 */
-  /* 右上 */
-  /* 左下 */
-  /* 左上 */
 }
 
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-cropper-view-box-img {
+.wx-cropper-view-box-img {
   position: absolute;
   overflow: hidden;
 }
 
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-dashed-h {
+.wx-cropper-dashed-h {
   position: absolute;
   top: 33.33333333%;
   left: 0;
@@ -142,13 +106,7 @@ Page {
   width: 100%;
   height: 33.33333333%;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-dashed-v {
+.wx-cropper-dashed-v {
   position: absolute;
   top: 0;
   left: 33.33333333%;
@@ -157,13 +115,7 @@ Page {
   width: 33.33333333%;
   height: 100%;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-t {
+.wx-cropper-line-t {
   display: block;
   position: absolute;
   top: 0;
@@ -172,34 +124,24 @@ Page {
   cursor: n-resize;
   background-color: var(--primary-color);
   width: 100%;
-  height: 1px;
+  height: 2rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-t::before {
+
+.wx-cropper-line-t::before {
   position: absolute;
   top: 50%;
   right: 0rpx;
-  width: 100%;
-  content: "";
-  -webkit-transform: translate3d(0, -50%, 0);
   bottom: 0;
+  transform: translate3d(0, -50%, 0);
   transform: translate3d(0, -50%, 0);
   z-index: 11;
   background: transparent;
+  width: 100%;
   height: 41rpx;
+  content: "";
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-r {
+
+.wx-cropper-line-r {
   display: block;
   position: absolute;
   top: 0;
@@ -207,35 +149,25 @@ Page {
   opacity: 0.1;
   cursor: e-resize;
   background-color: var(--primary-color);
-  width: 1px;
+  width: 2rpx;
   height: 100%;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-r::before {
+
+.wx-cropper-line-r::before {
   position: absolute;
   top: 0;
-  left: 50%;
-  width: 41rpx;
-  content: "";
-  -webkit-transform: translate3d(-50%, 0, 0);
   bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
   z-index: 11;
   background: transparent;
+  width: 41rpx;
   height: 100%;
+  content: "";
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-b {
+
+.wx-cropper-line-b {
   display: block;
   position: absolute;
   bottom: 0;
@@ -244,34 +176,23 @@ Page {
   cursor: s-resize;
   background-color: var(--primary-color);
   width: 100%;
-  height: 1px;
+  height: 2rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-b::before {
+
+.wx-cropper-line-b::before {
   position: absolute;
   top: 50%;
   right: 0rpx;
-  width: 100%;
-  content: "";
-  -webkit-transform: translate3d(0, -50%, 0);
   bottom: 0;
+  transform: translate3d(0, -50%, 0);
   transform: translate3d(0, -50%, 0);
   z-index: 11;
   background: transparent;
+  width: 100%;
   height: 41rpx;
+  content: "";
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-l {
+.wx-cropper-line-l {
   display: block;
   position: absolute;
   top: 0;
@@ -279,329 +200,113 @@ Page {
   opacity: 0.1;
   cursor: w-resize;
   background-color: var(--primary-color);
-  width: 1px;
+  width: 2rpx;
   height: 100%;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-line-l::before {
+.wx-cropper-line-l::before {
   position: absolute;
   top: 0;
-  left: 50%;
-  width: 41rpx;
-  content: "";
-  -webkit-transform: translate3d(-50%, 0, 0);
   bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
   transform: translate3d(-50%, 0, 0);
   z-index: 11;
   background: transparent;
+  width: 41rpx;
   height: 100%;
+  content: "";
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .wx-cropper-point {
-  position: absolute;
-  /* background-color: var(--primary-color); */
-  opacity: 0.75;
-  z-index: 3;
-  width: 5px;
-  height: 5px;
-}
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-t {
-  top: -3px;
-  left: 50%;
-  cursor: n-resize;
-  margin-left: -3px;
-}
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-r {
-  top: 50%;
-  left: 100%;
-  cursor: n-resize;
-  margin-top: -3px;
-  margin-left: -3px;
-}
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt {
+
+.wx-cropper-point {
   position: absolute;
   opacity: 1;
-  z-index: 1112;
-  cursor: n-resize;
-  width: 29rpx;
-  height: 29rpx;
+  z-index: 3;
+  width: 30rpx;
+  height: 30rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb {
+
+.point-rb {
   right: 0;
   bottom: 0;
-  -webkit-transform: translate3d(50%, 50%, 0);
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr {
+
+.point-tr {
   top: 0;
   right: 0;
-  -webkit-transform: translate3d(50%, -50%, 0);
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl {
+
+.point-bl {
   bottom: 0;
   left: 0;
-  -webkit-transform: translate3d(-50%, 50%, 0);
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt {
+
+.point-lt {
   top: 0;
   left: 0;
-  -webkit-transform: translate3d(-50%, -50%, 0);
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb::before,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb::after,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr::before,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr::after,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl::before,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl::after,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt::before,
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt::after {
+.point-rb::before,
+.point-rb::after,
+.point-tr::before,
+.point-tr::after,
+.point-bl::before,
+.point-bl::after,
+.point-lt::before,
+.point-lt::after {
   position: absolute;
   background-color: var(--primary-color);
   content: "";
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb::before {
-  right: calc(44%);
-  bottom: calc(44%);
+.point-rb::before {
+  right: -2rpx;
+  bottom: -2rpx;
   width: 6rpx;
   height: 30rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-rb::after {
-  right: calc(44%);
-  bottom: calc(44%);
+.point-rb::after {
+  right: -2rpx;
+  bottom: -2rpx;
   width: 30rpx;
   height: 6rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr::before {
-  top: calc(44%);
-  right: calc(44%);
+.point-tr::before {
+  top: -2rpx;
+  right: -2rpx;
   width: 6rpx;
   height: 30rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-tr::after {
-  top: calc(44%);
-  right: calc(44%);
+.point-tr::after {
+  top: -2rpx;
+  right: -2rpx;
   width: 30rpx;
   height: 6rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl::before {
-  bottom: calc(44%);
-  left: calc(44%);
+
+.point-bl::before {
+  bottom: -2rpx;
+  left: -2rpx;
   width: 6rpx;
   height: 30rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-bl::after {
-  bottom: calc(44%);
-  left: calc(44%);
+.point-bl::after {
+  bottom: -2rpx;
+  left: -2rpx;
   width: 30rpx;
   height: 6rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt::before {
-  top: calc(44%);
-  left: calc(44%);
+
+.point-lt::before {
+  top: -2rpx;
+  left: -2rpx;
   width: 6rpx;
   height: 30rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-lt::after {
-  top: calc(44%);
-  left: calc(44%);
+.point-lt::after {
+  top: -2rpx;
+  left: -2rpx;
   width: 30rpx;
   height: 6rpx;
 }
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-b {
-  top: 100%;
-  left: 50%;
-  cursor: n-resize;
-  margin-top: -3px;
-  margin-left: -3px;
-}
-.wx-content-info
-  .cropper-content
-  .wx-corpper
-  .wx-corpper-content
-  .wx-corpper-crop-box
-  .wx-cropper-view-box
-  .point-l {
-  top: 50%;
-  left: 0%;
-  cursor: n-resize;
-  margin-top: -3px;
-  margin-left: -3px;
-}
-.wx-content-info .cropper-config {
+.cropper-config {
   display: flex;
   position: absolute;
   right: 0;
@@ -612,26 +317,27 @@ Page {
   align-items: center;
   z-index: 3;
   background: #18191b;
-  padding: 0 24rpx;
-  height: 104rpx;
+  padding: 0 12px;
+  height: 52px;
 }
 
-.wx-content-info .cropper-config .cropper-desc {
-  margin-left: 24rpx;
+.cropper-config .cropper-desc {
+  /* margin-left: 24rpx; */
   color: #ffffff;
   font-weight: 500;
-  font-size: 28rpx;
+  font-size: 14px;
 }
-.wx-content-info .cropper-config .cropper-save {
-  margin-right: 24rpx;
-  border-radius: 36rpx;
+.cropper-config .cropper-save {
+  border-radius: 18px;
   background: linear-gradient(88deg, #33e9ff 0%, #008cff 100%);
-  width: 148rpx;
-  height: 72rpx;
+  width: 74px;
+  height: 36px;
   color: #ffffff;
+  font-style: normal;
   font-weight: 400;
-  font-size: 28rpx;
-  line-height: 72rpx;
+  font-size: 14px;
+  line-height: 36px;
+  font-family: PingFangSC, PingFang SC;
   text-align: center;
 }
 /* 裁剪框预览内容 */
