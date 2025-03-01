@@ -1,38 +1,36 @@
 <!--cropper/cropper.wxml-->
 <view class="wx-content-info">
     <view class='cropper-content' id="cropper-container">
-        <view class="wx-cropper">
-            <view class="wx-cropper-content" style="width:{{cropperW}}px;height:{{cropperH}}px;">
-                <view class="wx-cropper-content-bg">
-                    <image src="{{filePath}}" style="width:{{cropperW}}px;height:{{cropperH}}px"></image>
-                </view>
-                <view class="wx-cropper-crop-box" bind:touchstart="contentDragStart" bind:touchmove="contentDragMove"
-                    bind:touchend="contentTouchEnd"
-                    style="left:{{cutL}}px;top:{{cutT}}px;right:{{cutR}}px;bottom:{{cutB}}px">
-                    <view class="wx-cropper-view-box">
-                        <view class="wx-cropper-dashed-h"></view>
-                        <view class="wx-cropper-dashed-v"></view>
-                        <view class="wx-cropper-line-t" data-drag="top" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <view class="wx-cropper-line-r" data-drag="right" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <view class="wx-cropper-line-b" data-drag="bottom" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <view class="wx-cropper-line-l" data-drag="left" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <!-- 右上角 -->
-                        <view class="wx-cropper-point point-tr" data-drag="rightTop" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <!-- 右下角 -->
-                        <view class="wx-cropper-point point-rb" data-drag="rightBottom" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <!-- 左下角 -->
-                        <view class="wx-cropper-point point-bl" data-drag="leftBottom" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                        <!-- 左上角 -->
-                        <view class="wx-cropper-point point-lt" data-drag="leftTop" catch:touchstart="sideDragStart"
-                            catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
-                    </view>
+        <view class="wx-cropper-content" style="width:{{cropperW}}px;height:{{cropperH}}px;">
+            <view class="wx-cropper-content-bg">
+                <image src="{{filePath}}" style="width:{{cropperW}}px;height:{{cropperH}}px"></image>
+            </view>
+            <view class="wx-cropper-crop-box" bind:touchstart="contentDragStart" bind:touchmove="contentDragMove"
+                bind:touchend="contentTouchEnd"
+                style="left:{{cutL}}px;top:{{cutT}}px;right:{{cutR}}px;bottom:{{cutB}}px">
+                <view class="wx-cropper-view-box">
+                    <view class="wx-cropper-dashed-h"></view>
+                    <view class="wx-cropper-dashed-v"></view>
+                    <view class="wx-cropper-line-t" data-drag="top" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <view class="wx-cropper-line-r" data-drag="right" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <view class="wx-cropper-line-b" data-drag="bottom" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <view class="wx-cropper-line-l" data-drag="left" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <!-- 右上角 -->
+                    <view class="wx-cropper-point point-tr" data-drag="rightTop" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <!-- 右下角 -->
+                    <view class="wx-cropper-point point-rb" data-drag="rightBottom" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <!-- 左下角 -->
+                    <view class="wx-cropper-point point-bl" data-drag="leftBottom" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
+                    <!-- 左上角 -->
+                    <view class="wx-cropper-point point-lt" data-drag="leftTop" catch:touchstart="sideDragStart"
+                        catch:touchmove="sideDragMove" catch:touchend="sideDragEnd"></view>
                 </view>
             </view>
         </view>
@@ -40,6 +38,7 @@
 
     <view class='cropper-config' style="background: #18191B;">
         <text class="cropper-dec" style="color: #fff">请确认手写体框选范围</text>
+        <text class="cropper-cancle" bindtap="getImage">选择图片</text>
         <view class="cropper-save" bindtap="getImageInfo">确认</view>
     </view>
     <canvas id="cropperCanvas" type="2d"

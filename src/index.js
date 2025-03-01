@@ -211,20 +211,21 @@ Component({
               _this.conf.IMG_RATIO = Number(
                 (_this.conf.IMG_REAL_W / _this.conf.IMG_REAL_H).toFixed(5)
               )
-
               let cropperW, 
                 cropperH
-              if (
-                _this.conf.IMG_REAL_W / containerW >=
-                _this.conf.IMG_REAL_H / containerH
-              ) {
-                // 图片的宽相对更大，以宽为基准
-                cropperW = containerW
-                cropperH = Math.ceil(containerW / _this.conf.IMG_RATIO)
-              } else {
+              // .....
+              if (containerW / containerH >= _this.conf.IMG_RATIO) {
                 // 图片的高相对更大，以高为基准
                 cropperH = containerH
-                cropperW = Math.ceil(containerH * _this.conf.IMG_RATIO)
+                cropperW = Math.ceil(
+                  (containerH / _this.conf.IMG_REAL_H) * _this.conf.IMG_REAL_W
+                )
+              } else {
+                // 图片的宽相对更大，以宽为基准
+                cropperW = containerW
+                cropperH = Math.ceil(
+                  (containerW / _this.conf.IMG_REAL_W) * _this.conf.IMG_REAL_H
+                )
               }
               console.log('cropperW', cropperW, 'cropperH', cropperH)
               // 计算缩放比
@@ -569,8 +570,6 @@ Component({
               ? this.drag.SPACE_TOP_POSITION
               : leftTopT
           )
-          console.log('点的位置', type, xLength, yLength)
-          console.log('leftTopT', leftTopT)
           this.setData({
             cutT: leftTopT,
             cutL: leftTopL,

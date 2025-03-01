@@ -9,6 +9,7 @@ Page {
   --box-bg: transparent;
   /* 裁剪所有的背景色 */
   --cropper-bg: #000;
+  overflow: hidden;
 }
 .wx-content-info {
   display: flex;
@@ -18,36 +19,16 @@ Page {
   height: 100vh;
 }
 .cropper-content {
-  display: flex;
-  position: absolute;
-  top: 0px;
-  right: 10px;
-  bottom: 52px;
-  left: 10px;
+  position: relative;
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  order: 1;
   z-index: 2;
 }
-.cropper-content .wx-cropper {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  box-sizing: border-box;
-}
-.cropper-content .wx-cropper .wx-cropper-content {
-  position: relative;
-  /* 内部的信息 */
+.wx-cropper-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .wx-cropper-content-bg {
@@ -61,15 +42,6 @@ Page {
   height: 100%;
   min-height: 0 !important;
   max-height: none !important;
-}
-
-.mask {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.7);
 }
 
 .wx-cropper-crop-box {
@@ -221,8 +193,8 @@ Page {
   position: absolute;
   opacity: 1;
   z-index: 3;
-  width: 30rpx;
-  height: 30rpx;
+  width: 80rpx;
+  height: 80rpx;
 }
 
 .point-rb {
@@ -306,48 +278,36 @@ Page {
   width: 30rpx;
   height: 6rpx;
 }
+
 .cropper-config {
   display: flex;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  z-index: 3;
+  order: 2;
   background: #18191b;
-  padding: 0 12px;
-  height: 52px;
+  padding: 0 24rpx;
+  /* padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom); */
+  height: 104rpx;
 }
 
-.cropper-config .cropper-desc {
-  /* margin-left: 24rpx; */
+.cropper-desc {
   color: #ffffff;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 28rpx;
 }
-.cropper-config .cropper-save {
-  border-radius: 18px;
+.cropper-save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 36rpx;
   background: linear-gradient(88deg, #33e9ff 0%, #008cff 100%);
-  width: 74px;
-  height: 36px;
+  width: 148rpx;
+  height: 72rpx;
   color: #ffffff;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 36px;
+  font-size: 28rpx;
   font-family: PingFangSC, PingFang SC;
-  text-align: center;
-}
-/* 裁剪框预览内容 */
-.wx-cropper-viewer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.wx-cropper-viewer image {
-  position: absolute;
-  z-index: 2;
 }
