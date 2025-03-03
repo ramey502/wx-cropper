@@ -269,6 +269,78 @@ Component({
         })
         .exec()
     },
+    convertToJPEG(tempFilePath) {
+      return new Promise((resolve, reject) => {
+        // 读取临时文件内容
+        wx.getFileSystemManager().readFile({
+          filePath: tempFilePath,
+          encoding: 'base64',
+          success(res) {
+            const base64Data = res.data
+            // 判断是否是 PNG 格式
+            if (
+              tempFilePath.endsWith('.png') ||
+              base64Data.startsWith('iVBOR')
+            ) {
+              // 使用 wx.getImageInfo 加载图片
+              wx.getImageInfo({
+                src: tempFilePath,
+                success(imageInfo) {
+                  // 创建离屏 Canvas
+                  const canvas = wx.createOffscreenCanvas({
+                    type: '2d',
+                    width: imageInfo.width,
+                    height: imageInfo.height,
+                  })
+                  const ctx = canvas.getContext('2d')
+                  // 绘制图片到 Canvas
+                  const image = canvas.createImage()
+                  image.src = tempFilePath
+                  image.onload = () => {
+                    ctx.drawImage(image, 0, 0)
+                    // 导出为 JPEG 格式
+                    wx.canvasToTempFilePath({
+                      canvas: canvas,
+                      fileType: 'jpg',
+                      quality: 0.8, // 压缩质量
+                      success(res) {
+                        // 读取 JPEG 文件内容
+                        wx.getFileSystemManager().readFile({
+                          filePath: res.tempFilePath,
+                          encoding: 'base64',
+                          success(readRes) {
+                            const jpegBase64 = `data:image/jpeg;base64,${readRes.data}`
+                            resolve(jpegBase64)
+                          },
+                          fail(readErr) {
+                            reject(readErr)
+                          },
+                        })
+                      },
+                      fail(canvasErr) {
+                        reject(canvasErr)
+                      },
+                    })
+                  }
+                  image.onerror = (err) => {
+                    reject(err)
+                  }
+                },
+                fail(imageErr) {
+                  reject(imageErr)
+                },
+              })
+            } else {
+              // 如果已经是 JPEG 格式，直接返回
+              resolve(`data:image/jpeg;base64,${base64Data}`)
+            }
+          },
+          fail(readErr) {
+            reject(readErr)
+          },
+        })
+      })
+    },
 
     /**
      * 点击完成裁剪图片并返回图片信息
@@ -341,13 +413,21 @@ Component({
               quality: 1,
               canvas,
               success: function (res) {
-                console.log('res', res)
-                const img = {
-                  path: res.tempFilePath,
-                  width: canvasW,
-                  height: canvasH,
-                }
-                _this.triggerEvent('close', img)
+                _this
+                  .convertToJPEG(res.tempFilePath)
+                  .then((jpegBase64) => {
+                    console.log('res...', jpegBase64)
+                    const img = {
+                      path: jpegBase64,
+                      width: canvasW,
+                      height: canvasH,
+                    }
+                    _this.triggerEvent('close', img)
+                    return ''
+                  })
+                  .catch((err) => {
+                    console.log('rrr', err)
+                  })
               },
               complete: function () {
                 wx.hideLoading()
